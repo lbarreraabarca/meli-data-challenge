@@ -1,0 +1,21 @@
+{
+  "inputTables": [
+    {
+      "tableName": "pays",
+      "csv": {
+        "path": "data/pays.csv",
+        "delimiter": ",",
+        "header": true
+      }
+    }
+  ],
+  "query": "c2VsZWN0IHVzZXJfaWQgZnJvbSBwYXlz",
+  "outputTable": {
+    "tableName": "result",
+    "csv": {
+      "path": "output/test1",
+      "delimiter": ",",
+      "header": true
+    }
+  }
+}
