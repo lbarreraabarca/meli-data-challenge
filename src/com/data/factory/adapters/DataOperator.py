@@ -1,5 +1,6 @@
 import pandas as pd
 
+
 class DataOperator():
 
     def cast_str_to_date(self,

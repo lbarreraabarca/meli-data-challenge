@@ -7,7 +7,7 @@ if __name__ == "__main__":
     data = DataOperator()
     result = Results(data)
 
-    #df_pays = file.read("resources/data/pays.csv")
+    # df_pays = file.read("resources/data/pays.csv")
     df_prints = file.read("resources/data/prints.json")
     df_taps = file.read("resources/data/taps.json")
 
@@ -27,4 +27,3 @@ if __name__ == "__main__":
 
     # Solutions
     df_1 = result.prints_last_week(df_prints)
-    

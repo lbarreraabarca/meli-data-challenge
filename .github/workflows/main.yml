@@ -1,0 +1,25 @@
+name: ci-cd
+
+on: [push]
+
+jobs:
+  code-and-coverage-check:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.10"]
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install code style dependency
+        run: pip install pycodestyle
+      - name: Code check
+        run: bash scripts/check-code.sh
+      - name: Install coverage dependencies
+        run: pip install -r src/requirements.txt
+      - name: Unit test and coverage
+        run: bash scripts/check-coverage.sh
