@@ -33,9 +33,16 @@ class Results():
 
     def get_number_times(self,
                          df_left: pd.DataFrame,
-                         df_right: pd.DataFrame) -> pd.DataFrame:
-        df_left = self.data.drop_column(df_left, "event_data_position")
-        df_right = self.data.drop_column(df_right, "event_data_position")
+                         df_right: pd.DataFrame,
+                         operation_field: str = "day_y",
+                         operation: str = "count") -> pd.DataFrame:
+        event_data_position_field = "event_data_position"
+        if event_data_position_field in df_left:
+            df_left = self.data.drop_column(df_left,
+                                            event_data_position_field)
+        if event_data_position_field in df_right:
+            df_right = self.data.drop_column(df_right,
+                                             event_data_position_field)
         df_snapshot = df_left
         on_fieds = ["user_id", "event_data_value_prop"]
         df_join = pd.merge(df_left,
@@ -55,8 +62,8 @@ class Results():
 
         # Group
         group_fields = ["day", "user_id", "event_data_value_prop"]
-        df_join = df_join.groupby(group_fields)["day_y"] \
-            .agg("count")
+        df_join = df_join.groupby(group_fields)[operation_field] \
+            .agg(operation)
 
         df_join = self.data.drop_column(df_join, "three_weeks")
         df_join = self.data.drop_column(df_join, "day_y")
@@ -76,9 +83,9 @@ class Results():
                             how="left",
                             left_on=on_fieds,
                             right_on=on_fieds)
-        df_final["number_times"] = df_final["day_y"] \
-            .apply(lambda x: int(x) if x > 0 else int(0))
-        df_final = self.data.drop_column(df_final, "day_y")
+        df_final["number_times"] = df_final[operation_field] \
+            .apply(lambda x: x if x > 0 else 0)
+        df_final = self.data.drop_column(df_final, operation_field)
         return df_final
 
     @property

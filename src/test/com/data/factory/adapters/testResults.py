@@ -188,6 +188,100 @@ class testResults(unittest.TestCase):
         print(df_actual)
         self.assertTrue(True)
 
+    def test_sum_total(self):
+        data = DataOperator()
+        result = Results(data)
+
+        # Prints
+        prints_rows = [
+            {
+                "day": "2020-11-12",
+                "event_data_position": 0,
+                "event_data_value_prop": "prepaid",
+                "user_id": 95844
+            },
+            {
+                "day": "2020-11-12",
+                "event_data_position": 1,
+                "event_data_value_prop": "cellphone_recharge",
+                "user_id": 95844
+            },
+            {
+                "day": "2020-11-12",
+                "event_data_position": 2,
+                "event_data_value_prop": "link_cobro",
+                "user_id": 95844
+            },
+            {
+                "day": "2020-11-15",
+                "event_data_position": 0,
+                "event_data_value_prop": "link_cobro",
+                "user_id": 95844
+            },
+            {
+                "day": "2020-11-17",
+                "event_data_position": 0,
+                "event_data_value_prop": "link_cobro",
+                "user_id": 95844
+            },
+            {
+                "day": "2020-11-15",
+                "event_data_position": 1,
+                "event_data_value_prop": "credits_consumer",
+                "user_id": 95844
+            },
+            {
+                "day": "2020-11-15",
+                "event_data_position": 2,
+                "event_data_value_prop": "cellphone_recharge",
+                "user_id": 95844
+            },
+            {
+                "day": "2020-11-15",
+                "event_data_position": 3,
+                "event_data_value_prop": "point",
+                "user_id": 95844
+            }
+        ]
+        df_prints = pd.DataFrame(prints_rows)
+        df_prints = data.cast_str_to_date(df_prints, "day", "%Y-%m-%d")
+
+        pays_rows = [
+            {
+                "day": "2020-11-12",
+                "total": 10500,
+                "event_data_value_prop": "link_cobro",
+                "user_id": 95844
+            },
+            {
+                "day": "2020-11-13",
+                "total": 10500,
+                "event_data_value_prop": "link_cobro",
+                "user_id": 95844
+            },
+            {
+                "day": "2020-11-15",
+                "total": 10500,
+                "event_data_value_prop": "credits_consumer",
+                "user_id": 95844
+            },
+            {
+                "day": "2020-11-15",
+                "total": 10500,
+                "event_data_value_prop": "cellphone_recharge",
+                "user_id": 95844
+            }
+        ]
+        df_pays = pd.DataFrame(pays_rows)
+        df_pays = data.cast_str_to_date(df_pays, "day", "%Y-%m-%d")
+
+        df_actual = result.get_number_times(df_prints,
+                                            df_pays,
+                                            operation_field="total",
+                                            operation="sum")
+        print(df_actual)
+        self.assertTrue(True)
+
 
 if __name__ == '__main__':
     unittest.main()
