@@ -7,7 +7,7 @@ if __name__ == "__main__":
     data = DataOperator()
     result = Results(data)
 
-    # df_pays = file.read("resources/data/pays.csv")
+    df_pays = file.read("resources/data/pays.csv")
     df_prints = file.read("resources/data/prints.json")
     df_taps = file.read("resources/data/taps.json")
 
@@ -23,7 +23,7 @@ if __name__ == "__main__":
     df_taps = data.extract_field(df_taps, "event_data", "value_prop")
     df_taps = data.drop_column(df_taps, "event_data")
 
-    print(df_taps)
-
     # Solutions
     df_1 = result.prints_last_week(df_prints)
+    df_2 = result.prints_were_clicked(df_prints, df_taps)
+    df_3 = result.number_times_viewed(df_prints)
